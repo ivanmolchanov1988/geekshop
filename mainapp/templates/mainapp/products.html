@@ -19,7 +19,7 @@
 
             <h1 class="my-4">GeekShop</h1>
             <div class="list-group">
-                {% for m in menu %}
+                {% for m in categories %}
                     <a href="#" class="list-group-item">{{ m.name }}</a>
                 {% endfor %}
             </div>
@@ -58,13 +58,22 @@
 
             <div class="row">
 
-                {% for product in products.products %}
+                {% for product in products %}
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
+                            {% if product.image == '' %}
                             <a href="#">
                                 <img class="card-img-top"
-                                     src="{% static product.path %}"alt="">
+                                     src="{% static 'vendor/img/slides/slide-1.jpg' %}"
+                                     alt="">
                             </a>
+                            {% else %}
+                            <a href="#">
+                                <img class="card-img-top"
+                                     src="/media/{{ product.image }}"
+                                     alt="">
+                            </a>
+                            {% endif %}
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <a href="#">{{ product.name }}</a>
