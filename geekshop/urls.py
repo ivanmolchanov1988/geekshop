@@ -19,7 +19,13 @@ from django.contrib import admin
 from django.urls import path
 
 from mainapp import views as mainapp_views
+from django.contrib import admin
+from django.urls import path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+#from mainapp.views import index, products
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,3 +33,7 @@ urlpatterns = [
     path('products/', mainapp_views.products, name='products'),
     path('test-context/', mainapp_views.test_context),
 ]
+
+
+if settings.DEBUG == True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
