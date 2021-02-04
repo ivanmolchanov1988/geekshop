@@ -9,7 +9,7 @@ def index(request):
     return render(request, 'mainapp/index.html')
 
 
-def products(request):
+def products(request, id=None):
 
     with open(
             'mainapp/templates/mainapp/fixtures/products.json', 'r', encoding='utf-8') as oJson:
