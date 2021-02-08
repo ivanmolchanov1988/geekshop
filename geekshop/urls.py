@@ -34,6 +34,7 @@ urlpatterns = [
     #path('products/', products, name ='products'), Было
     path('auth/', include('authapp.urls', namespace='auth')),
     path('test-context/', mainapp_views.test_context),
+    path('baskets/', include('basket.urls', namespace='baskets')),
 ]
 
 
