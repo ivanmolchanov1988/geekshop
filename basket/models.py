@@ -16,3 +16,13 @@ class Basket(models.Model):
 
     def sum(self):
         return self.quatity * self.product.price
+
+    def total_quantity(self):
+        baskets = Basket.objects.filter(user=self.user)
+        total = sum(basket.quatity for basket in baskets)
+        return total
+
+    def total_sum(self):
+        baskets = Basket.objects.filter(user=self.user)
+        total = sum(basket.sum() for basket in baskets)
+        return total
