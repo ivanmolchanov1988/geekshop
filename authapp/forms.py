@@ -5,6 +5,8 @@ from authapp.models import User
 import hashlib
 import random
 
+from .models import ShopUserProfile
+
 class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
@@ -51,9 +53,20 @@ class UserProfileForm(UserChangeForm):
         fields = ('first_name', 'last_name', 'avatar', 'username', 'email', 'age')
 
     def __init__(self, *args, **kwargs):
-        super(UserProfileForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['readonly'] = True
         self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
+
+
+class ShopUserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = ShopUserProfile
+        fields = ('tagline', 'aboutMe', 'gender')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
