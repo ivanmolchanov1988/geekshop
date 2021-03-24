@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required
 
-from authapp.forms import UserLoginForm, UserRegisterform, UserProfileForm
+from authapp.forms import UserLoginForm, UserRegisterform, UserProfileForm, ShopUserProfileEditForm
 from basket.models import Basket
 #from authapp.models import User
 
@@ -22,9 +22,7 @@ def verify(request, user_id, hash):
         user.is_active = True
         user.activation_key = None
         user.save()
-        auth.login(request, user)
-        #messages.success(request, 'Вы авторизованы. Аккаунт активет :)')
-        #return HttpResponseRedirect(reverse('index'))
+        auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return render(request, 'authapp/verification.html')
     else:
         return HttpResponseRedirect(reverse('authapp:login'))
@@ -77,11 +75,14 @@ def logout(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
-        if form.is_valid():
+        profile_form = ShopUserProfileEditForm(data=request.POST, instance=request.user.shopuserprofile)
+        if form.is_valid() and profile_form.is_valid():
             form.save()
+            profile_form.save()
             return HttpResponseRedirect(reverse('authapp:profile'))
     else:
         form = UserProfileForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
     # total_quantity = 0
     # total_sum = 0
@@ -94,6 +95,7 @@ def profile(request):
     baskets = Basket.objects.filter(user=request.user)
 
     context = {'form': form,
+               'profile_form': profile_form,
                'baskets': baskets,
                }
     return render(request, 'authapp/profile.html', context)
