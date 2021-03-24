@@ -170,13 +170,13 @@ SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
 SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
 
 SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.py.social_auth.social_details',
-    'social_core.pipeline.py.social_auth.social_uid',
-    'social_core.pipeline.py.social_auth.auth_allowed',
-    'social_core.pipeline.py.social_auth.social_user',
-    'social_core.pipeline.py.user.create_user',
-    'authapp.pipeline.py.save_user_profile',
-    'social_core.pipeline.py.social_auth.associate_user',
-    'social_core.pipeline.py.social_auth.load_extra_data',
-    'social_core.pipeline.py.user.user_details',
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.create_user',
+    'authapp.pipeline.save_user_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
 )
