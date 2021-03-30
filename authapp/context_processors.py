@@ -1,10 +1,11 @@
+from basket.models import Basket
 
-
-def user_status(request):
+#def user_status(request):
+def user_counter(request):
     user = request.user
     if user.is_authenticated:
-        status = 'авторизован'
+        counter = Basket.objects.filter(user=user).count()
     else:
-        status = 'не авторизован'
+        counter = 0
 
-    return {'status': status}
+    return {'user_counter': counter}

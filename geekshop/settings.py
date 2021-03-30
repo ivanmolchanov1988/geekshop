@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'basket',
     'adminapp',
     'social_django',
+    'ordersapp',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'authapp.context_processors.user_status',
+                'authapp.context_processors.user_counter',
             ],
         },
     },
