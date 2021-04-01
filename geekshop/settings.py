@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'adminapp',
     'social_django',
     'ordersapp',
+
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+if DEBUG:
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
 
 ROOT_URLCONF = 'geekshop.urls'
 
@@ -140,11 +151,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-
-)
 
 
 MEDIA_URL = '/media/'
