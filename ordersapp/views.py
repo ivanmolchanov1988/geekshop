@@ -14,6 +14,7 @@ from ordersapp.forms import OrderItemForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect
 
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
@@ -126,6 +127,3 @@ def order_forming_complete(request, pk):
     order.save()
 
     return HttpResponseRedirect(reverse('ordersapp:orders_list'))
-
-
-

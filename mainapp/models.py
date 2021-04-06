@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from django.core.cache import cache
 
 # Create your models here.
 class ProductCategory(models.Model):
@@ -8,6 +10,17 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_all(cls):
+        if settings.LOW_CACHE:
+            key ='categories'
+            categories = cache.get(key)
+            if categories is None:
+                categories = cls.objects.all()
+                cache.set(key, categories)
+            return categories
+        else:
+            return cls.objects.all()
 
 class Product(models.Model):
     name = models.CharField(max_length=256)

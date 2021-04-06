@@ -60,7 +60,7 @@ def products(request, category_id=None, page=1):
         products_paginator = paginator.page(paginator.num_pages)
 
     context = {
-        'categories': ProductCategory.objects.all(),
+        'categories': ProductCategory.get_all(),
         'products': products_paginator,
     }
 
