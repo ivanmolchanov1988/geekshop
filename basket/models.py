@@ -8,6 +8,8 @@ from mainapp.models import Product
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+from django.utils.functional import cached_property
+
 # Create your models here.
 class BasketQuerySet(models.QuerySet):
     def count_gt_2(self):
@@ -38,13 +40,21 @@ class Basket(models.Model):
     def sum(self):
         return self.quatity * self.product.price
 
-    def total_quantity(self):
+    @cached_property
+    def get_items_cached(self):
+        return self.user.basket.select_related()
+
+    def get_baskets_from_user(self):
         baskets = Basket.objects.filter(user=self.user)
+        return baskets
+
+    def total_quantity(self):
+        baskets = self.get_items_cached
         total = sum(basket.quatity for basket in baskets)
         return total
 
     def total_sum(self):
-        baskets = Basket.objects.filter(user=self.user)
+        baskets = self.get_items_cached
         total = sum(basket.sum() for basket in baskets)
         return total
 
