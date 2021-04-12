@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from authapp.views import login, register, logout, profile, verify
 

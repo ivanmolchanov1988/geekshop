@@ -1,10 +1,14 @@
-from django.urls import reverse
-from django.core.mail import send_mail
-from django.conf import settings
+from django.urls import path, re_path
 
-def send_verify_email(user):
-    verify_link = settings.DOMAIN_NAME + reverse('auth:verify', args=[user.id, user.activation_key])
-    title = f'Подтверждение регистрации {user.email}'
-    message = f'Пройдите регистрацию {verify_link}'
-    result = send_mail(title, message, settings.EMAIL_HOST_USER, [user.email, ], fail_silently=False)
-    return result
+from authapp.views import login, register, logout, profile, verify
+
+app_name = 'authapp'
+
+urlpatterns = [
+    path('login/', login, name='login'),
+    path('register/', register, name='register'),
+    path('logout/', logout, name='logout'),
+    path('profile/', profile, name='profile'),
+
+    path('verify/<int:user_id>/<hash>/', verify, name='verify'),
+]

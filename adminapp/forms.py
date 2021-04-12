@@ -1,18 +1,19 @@
-from authapp.forms import UserRegisterform, UserProfileForm
-from authapp.models import User
 from django import forms
 
-class UserAdminRegisterform(UserRegisterform):
-    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
+from authapp.forms import UserRegisterForm, UserProfileForm
+from authapp.models import User
+
+
+class UserAdminRegisterForm(UserRegisterForm):
+    avatar = forms.ImageField(widget=forms.FileInput())
 
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'avatar')
 
-        def __init__(self, *args, **kwargs):
-            super(UserAdminRegisterform, self).__init__(*args, **kwargs)
-            self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
-
+    def __init__(self, *args, **kwargs):
+        super(UserAdminRegisterForm, self).__init__(*args, **kwargs)
+        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
 
 
 class UserAdminProfileForm(UserProfileForm):

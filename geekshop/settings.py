@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7z^(mxgej9ron8#e%*@*46jn1iwn^ztg66&t&g4k+6yvu^6ef+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -233,3 +234,15 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 120
+CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
+CACHES = {
+   'default': {
+       'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+       'LOCATION': '127.0.0.1:11211',
+   }
+}
+LOW_CACHE = True
